@@ -94,7 +94,7 @@ jobs:
         run: pnpm install
       
       - name: Build
-        run: pnpm run --filter client build
+        run: pnpm run build
       
       - name: S3
         uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
