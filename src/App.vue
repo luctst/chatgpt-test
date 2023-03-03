@@ -41,7 +41,7 @@ const callChatGPTAPI = async function (prompt: string) {
 }
 
 onMounted(() => {
-  document.body.style = 'margin:0;padding:0;';
+  document.body.setAttribute('style', 'margin:0;padding:0;')
 });
 </script>
 
