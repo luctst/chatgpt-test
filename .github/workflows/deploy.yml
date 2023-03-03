@@ -89,6 +89,12 @@ jobs:
           key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-store-
+      
+      - name: Make envfile
+        uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_VUE_APP_API_URL_DEV: ${{ secrets.VITE_APP_OPENAI_API_KEY }}
+          file_name: .env
 
       - name: Install dependencies
         run: pnpm install
