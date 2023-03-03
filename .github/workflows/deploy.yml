@@ -54,7 +54,6 @@ jobs:
   #       run: pnpm run typecheck
       
   build:
-    needs: cache-and-install
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
