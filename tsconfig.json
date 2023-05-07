@@ -13,8 +13,13 @@
     "skipLibCheck": true,
     "noEmit": true,
     "types": [
-      "element-plus/global"
-    ]
+      "element-plus/global",
+      "node",
+      "@intlify/vite-plugin-vue-i18n/client",
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx", "src/**/*.vue"],
   "references": [{ "path": "./tsconfig.node.json" }]
