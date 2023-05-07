@@ -13,7 +13,7 @@ const app = createApp(App);
 app.use(VueCookieNext);
 app.use(VueGtag, {
   config: { id: import.meta.env.VITE_APP_GA_MEASUREMENT_ID },
-  enabled: false,
+  enabled: import.meta.env.PROD ? true : false,
 });
 app.use(VueSocialSharing);
 app.use(createI18n({

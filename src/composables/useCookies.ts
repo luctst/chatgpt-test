@@ -8,10 +8,6 @@ export default function useCookies(gtag: any) {
 
   if (cookie.isCookieAvailable('cookies_consent')) {
     allowCookies.value = cookie.getCookie('cookies_consent') === 'true';
-
-    if (!import.meta.env.DEV) {
-      gtag.optIn();
-    };
   } else {
     allowCookies.value = undefined;
   }
@@ -21,13 +17,6 @@ export default function useCookies(gtag: any) {
       cookie.setCookie('cookies_consent', allowCookies.value.toString(), {
         expire: new Date(2025, 1, 1),
       });
-      if (allowCookies.value) {
-        if (!import.meta.env.DEV) {
-          gtag.optIn();
-        };
-      } else {
-        gtag.optOut();
-      }
     }
   });
 
