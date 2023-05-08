@@ -2,6 +2,18 @@
 import { onMounted, ref, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useCookies from './composables/useCookies';
+import { useHead } from '@vueuse/head';
+
+
+useHead({
+  script: [
+    {
+      async: true,
+      src: `https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${import.meta.env.VITE_APP_GA_ADSENCE_ID}`,
+      crossorigin: `anonymous`,
+    },  
+  ]
+})
 
 const { t } = useI18n();
 const gtag = inject<any>('gtag');

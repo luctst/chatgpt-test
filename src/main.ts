@@ -4,12 +4,14 @@ import { createApp } from 'vue'
 import { createI18n, I18nOptions } from 'vue-i18n'
 import VueSocialSharing from 'vue-social-sharing';
 import VueGtag from 'vue-gtag';
+import { createHead } from '@vueuse/head';
 import { VueCookieNext } from 'vue-cookie-next';
 import App from './App.vue'
 import messages from './i18n/messages';
 
 const app = createApp(App);
 
+app.use(createHead());
 app.use(VueCookieNext);
 app.use(VueGtag, {
   config: { id: import.meta.env.VITE_APP_GA_MEASUREMENT_ID },
