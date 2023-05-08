@@ -4,12 +4,13 @@ import { useI18n } from 'vue-i18n';
 import useCookies from './composables/useCookies';
 
 const { t } = useI18n();
+const gtag = inject<any>('gtag');
 const question = ref<string>('');
 const answer = ref<string>('');
 const isLoading = ref<boolean>(false);
 const showModal = ref<boolean>(false);
 const errMessage = ref<string | null>(null);
-const { showBanner, okClicked } = useCookies(inject<unknown>('gtag'));
+const { showBanner, okClicked } = useCookies(gtag);
 
 const callChatGPTAPI = async function (prompt: string) {
   isLoading.value = true;
@@ -44,6 +45,11 @@ const callChatGPTAPI = async function (prompt: string) {
   showModal.value = true;
 }
 
+const trackGA = () => {
+  if (import.meta.env.PROD) return;
+  gtag('event', 'conversion', { 'send_to': 'AW-861021674/NOi3CODE4ZwYEOrLyJoD' });
+};
+
 onMounted(() => {
   document.body.setAttribute('style', 'margin:0;padding:0;');
 });
@@ -56,6 +62,7 @@ onMounted(() => {
         <ElCol :span="24">
           <h1>{{ $t('title') }}</h1>
           <ElInput
+            @focus="trackGA"
             @keydown.enter="callChatGPTAPI(question)"
             size="large"
             clearable
