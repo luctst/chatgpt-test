@@ -58,8 +58,8 @@ const callChatGPTAPI = async function (prompt: string) {
 }
 
 const trackGA = () => {
-  if (import.meta.env.PROD) return;
-  gtag('event', 'conversion', { 'send_to': 'AW-861021674/NOi3CODE4ZwYEOrLyJoD' });
+  if (import.meta.env.DEV) return;
+  gtag.event('click_input', { 'send_to': 'AW-861021674/NOi3CODE4ZwYEOrLyJoD' });
 };
 
 onMounted(() => {
