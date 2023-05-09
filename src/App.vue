@@ -54,17 +54,6 @@ const callChatGPTAPI = async function (prompt: string) {
   marked.setOptions({
     breaks: true,
     gfm: true,
-    headerIds: false,
-    langPrefix: 'language-',
-    mangle: true,
-    pedantic: false,
-    sanitize: false,
-    sanitizer: null,
-    silent: false,
-    smartLists: false,
-    smartypants: false,
-    tables: true,
-    xhtml: false,
   });
   answer.value = marked(data.choices[0].text);
   isLoading.value = false;
