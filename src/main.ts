@@ -6,11 +6,18 @@ import VueSocialSharing from 'vue-social-sharing';
 import VueGtag from 'vue-gtag';
 import { createHead } from '@vueuse/head';
 import { VueCookieNext } from 'vue-cookie-next';
+import Ads from 'vue-google-adsense';
+import VS2 from 'vue-script2';
 import App from './App.vue'
 import messages from './i18n/messages';
 
 const app = createApp(App);
 
+app.use(Ads.AutoAdsense, { adClient: import.meta.env.VITE_APP_GA_ADSENCE_ID, isNewAdsCode: true })
+// app.use(Ads.Adsense);
+// app.use(Ads.InArticleAdsense);
+// app.use(Ads.InFeedAdsense);
+app.use(VS2);
 app.use(createHead());
 app.use(VueCookieNext);
 app.use(VueGtag, {

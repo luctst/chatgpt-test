@@ -3,7 +3,7 @@ import { onMounted, ref, inject } from 'vue';
 import { useI18n } from 'vue-i18n';
 import useCookies from './composables/useCookies';
 import { useHead } from '@vueuse/head';
-
+import { marked } from 'marked';
 
 useHead({
   script: [
@@ -51,8 +51,22 @@ const callChatGPTAPI = async function (prompt: string) {
     return;
   }
 
-
-  answer.value = data.choices[0].text;
+  marked.setOptions({
+    breaks: true,
+    gfm: true,
+    headerIds: false,
+    langPrefix: 'language-',
+    mangle: true,
+    pedantic: false,
+    sanitize: false,
+    sanitizer: null,
+    silent: false,
+    smartLists: false,
+    smartypants: false,
+    tables: true,
+    xhtml: false,
+  });
+  answer.value = marked(data.choices[0].text);
   isLoading.value = false;
   showModal.value = true;
 }
@@ -68,6 +82,10 @@ onMounted(() => {
 </script>
 
 <template>
+  <!-- <Adsense
+      data-ad-client="ca-pub-5814792347277011"
+      data-ad-slot="5504213087">
+  </Adsense> -->
   <ElContainer v-loading="isLoading" element-loading-background="#333" class="wrapper">
     <ElMain>
       <ElRow>
@@ -77,10 +95,11 @@ onMounted(() => {
             @focus="trackGA"
             @keydown.enter="callChatGPTAPI(question)"
             size="large"
-            clearable
             v-model="question"
             placeholder="Type your question here"
-            show-word-limit
+            :show-word-limit="true"
+            clearable
+            maxLength="100"
             type="text"
           />
           <small v-if="errMessage" class="">{{ errMessage }}</small>
@@ -129,7 +148,7 @@ onMounted(() => {
     </ElFooter>
   </ElContainer>
   <ElDialog v-model="showModal" center>
-    <main>{{ answer }}</main>
+    <main v-html="answer" class="modal--content--answer"></main>
   </ElDialog>
   <ElDialog v-model="showBanner" :append-to-body="true">
     <template #header>
@@ -241,5 +260,12 @@ p {
 :deep(.el-dropdown--link) {
   color: #18222c;
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+}
+
+.modal--content--answer {
+  font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
+  color: #18222c;
+  font-size: 1.1rem;
+  line-height: 1.5rem;
 }
 </style>
