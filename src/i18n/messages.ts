@@ -19,6 +19,10 @@ export default {
       btnAgree: 'I agree',
       btnDisagree: 'I disagree',
     },
+    input: {
+      wait: 'It can takes a few seconds to get an answer.',
+      placeholder: 'Type your questions here, it can takes a few seconds to get an answer.',
+    },
   },
   "fr": {
     "title": "Posez votre question à ChatGPT",
@@ -39,6 +43,10 @@ export default {
       description: 'Pour plus de détails, consultez notre politique d\'utilisation des cookies.',
       btnAgree: 'J\'accepte',
       btnDisagree: 'Je refuse',
+    },
+    input: {
+      wait: 'Cela peut prendre quelques secondes pour obtenir une réponse.',
+      placeholder: 'Écrivez votre question',
     },
   },
 };

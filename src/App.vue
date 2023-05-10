@@ -62,6 +62,7 @@ const callChatGPTAPI = async function (prompt: string) {
 
 const trackGA = () => {
   if (import.meta.env.DEV) return;
+  gtag.event('click_input', { 'event_label': 'click on input', 'value': 'click on input' });
   gtag.event('click_input', { 'send_to': 'AW-861021674/NOi3CODE4ZwYEOrLyJoD' });
 };
 
@@ -71,21 +72,18 @@ onMounted(() => {
 </script>
 
 <template>
-  <!-- <Adsense
-      data-ad-client="ca-pub-5814792347277011"
-      data-ad-slot="5504213087">
-  </Adsense> -->
   <ElContainer v-loading="isLoading" element-loading-background="#333" class="wrapper">
     <ElMain>
       <ElRow>
-        <ElCol :span="24">
+        <ElCol :span="24" class="col--form--content">
           <h1>{{ $t('title') }}</h1>
+          <small>{{ $t('input.wait') }}</small>
           <ElInput
             @focus="trackGA"
             @keydown.enter="callChatGPTAPI(question)"
             size="large"
             v-model="question"
-            placeholder="Type your question here"
+            :placeholder="$t('input.placeholder')"
             :show-word-limit="true"
             clearable
             maxLength="100"
@@ -182,6 +180,12 @@ onMounted(() => {
   padding: 0;
 }
 
+.col--form--content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 small {
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
@@ -193,8 +197,12 @@ small {
   text-align: center;
   font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
   'Microsoft YaHei', '微软雅黑', Arial, sans-serif;
-  font-size: 1.5rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+  margin-bottom: .3rem;
+}
+
+:deep(.el-col > small) {
+  font-size: .7rem;
 }
 
 :deep(.el-main) {
@@ -215,6 +223,7 @@ small {
 :deep(.el-input) {
   display: flex;
   justify-content: center;
+  margin-top: 2rem;
 }
 
 p {
