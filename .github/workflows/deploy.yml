@@ -1,6 +1,7 @@
 name: deploy
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
@@ -100,7 +101,7 @@ jobs:
           VITE_APP_GA_MEASUREMENT_ID: ${{ secrets.VITE_APP_GA_MEASUREMENT_ID }}
           VITE_APP_GA_ADSENCE_ID: ${{ secrets.VITE_APP_GA_ADSENCE_ID }}
       
-      - name: S3
+      - name: S3 vue app
         uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
         with:
           args: --acl public-read --delete
@@ -110,6 +111,17 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
           AWS_REGION: 'eu-west-1'
           SOURCE_DIR: 'dist'
+
+      - name: S3 ads.txt
+        uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          AWS_REGION: 'eu-west-1'
+          SOURCE_DIR: 'src/assets/ads.txt'
         
       - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@v2
