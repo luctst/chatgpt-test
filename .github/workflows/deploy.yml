@@ -1,7 +1,6 @@
 name: deploy
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - master
@@ -112,16 +111,19 @@ jobs:
           AWS_REGION: 'eu-west-1'
           SOURCE_DIR: 'dist'
 
-      - name: S3 ads.txt
-        uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
         with:
-          args: --acl public-read --delete
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
+          aws-region: eu-west-1
+        
+      - name: Push ads.txt file into bucket
+        if: false
         env:
-          AWS_S3_BUCKET: ${{ secrets.AWS_BUCKET }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-          AWS_REGION: 'eu-west-1'
-          SOURCE_DIR: 'src/assets/ads.txt'
+          BUCKET_NAME: ${{ secrets.AWS_BUCKET }}
+        run: |
+          aws s3api put-object --acl public-read --bucket $BUCKET_NAME --key ads.txt --body ./src/assets/ads.txt --content-type text/plain
         
       - name: Invalidate Cloudfront
         uses: chetan/invalidate-cloudfront-action@v2
