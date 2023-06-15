@@ -48,6 +48,7 @@ const callChatGPTAPI = async function (prompt: string) {
 
   if (data.error) {
     errMessage.value = t('apiError');
+    gtag.event('error_chatgpt', { 'event_label': 'error chatgpt api', 'value': 'error chatgpt api' });
     return;
   }
 
